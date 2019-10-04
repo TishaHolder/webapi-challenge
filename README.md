@@ -26,13 +26,26 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+1)	Routes – Express tries to match requests by routes. A route associates or matches a URL pattern and a GET, POST, PUT, or DELETE request with a callback method that is designed to handle and execute the request. 
+
+2)	Middleware - code that executes between a server receiving a request and sending a response.
+
+
 - [ ] Describe Middleware?
+
+Middleware functions are functions that have access to the request object, the response object, and the next function in the application's request-response cycle. The next function executes the middleware succeeding the current middleware.
 
 - [ ] Describe a Resource?
 
+A resource is a particular set of data that is stored on a server. It could be a file, array, list, image, etc.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+Response codes provide information to clients about how their requests were 	handled. The res object has a .status() method that allows us to set the status code, and other methods like .send() can be chained from it.
+
 - [ ] How can we partition our application into sub-applications?
+
+Routers provide functionality for handling route matching, requests, and sending responses. Routers use all the .get(), .put(), .post(), and .delete() routes  and provide the ability to separate our application into sub-applications or different files to handle different routes.
 
 ## Project Setup
 

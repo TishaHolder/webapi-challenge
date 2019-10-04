@@ -12,3 +12,13 @@ I need this code, just don't know where, perhaps should make some middleware, do
 
 Go code!
 */
+
+//import express
+const express = require ('express');
+
+//import server from server.js
+const server = require('./server.js');
+
+//set up API port
+const port = 8000;
+server.listen(port, ()=> console.log(`Server is listening on port ${port}.`));
