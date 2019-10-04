@@ -46,6 +46,24 @@ actionRouter.post('/:id', validateProjectId, (req, res) => {
     })
 });
 
+actionRouter.put('/:id', validateActionId, validateActionInfo, (req, res) => {
+
+    const id = req.params.id;
+    const changes = req.body;
+    const description = changes.description;
+    const notes = changes.notes;
+    const completed = changes.notes;
+
+    actionDB.update(id, changes)
+    .then(updatedAction => {
+        res.status(200).json(updatedAction);
+    })
+    .catch(error => {
+        res.status(500).json( {error: 'There was an error updating the action.'} );
+    })
+
+});
+
 actionRouter.delete('/:id', validateActionId, (req, res) => {
 
     const actionId = req.params.id;
@@ -60,7 +78,6 @@ actionRouter.delete('/:id', validateActionId, (req, res) => {
 
 
 });
-
 
 //custom/local middleware
 function validateProjectId(req, res, next){
