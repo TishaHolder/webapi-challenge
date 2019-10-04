@@ -9,6 +9,57 @@ const actionDB = require('../data/helpers/actionModel.js');
 const projectDB = require('../data/helpers/projectModel.js');
 
 //*******************END POINTS OR REQUESTS THAT WE NEED TO HANDLE****************/
+actionRouter.get('/:id', validateActionId, (req, res) => {
+    const actionId = req.params.id;
+
+    actionDB.get(actionId)
+    .then(action => {       
+        res.status(200).json(action);       
+        
+    })
+    .catch(error => {
+        res.status(500).json( {error: 'There was an error retrieving the action from the database.'} );
+    })
+
+});
+
+actionRouter.post('/:id', validateProjectId, (req, res) => {
+
+    const project_id = req.params.id;
+    const action = req.body;
+    const description = action.description;
+    const notes = action.notes;
+    const completed = action.completed;
+
+    actionDB.insert({project_id, description, notes, completed})
+    .then(action => {
+        if(action){
+            res.status(200).json(action);
+        }
+        else {
+            res.status(404).json( {message: 'Missing required action information.'} );
+        }
+    })
+    .catch(error => {
+        console.log("add action error", error);
+        res.status(500).json( {error: 'There was an error while writing the action to the database.'} );
+    })
+});
+
+actionRouter.delete('/:id', validateActionId, (req, res) => {
+
+    const actionId = req.params.id;
+
+    actionDB.remove(actionId)
+    .then(numDeleted => {
+        res.status(404).json(numDeleted);
+    })
+    .catch(error => {
+        res.status(500).json( {error: 'There was an error deleting the action from the database.'} );
+    })
+
+
+});
 
 
 //custom/local middleware
@@ -22,7 +73,7 @@ function validateProjectId(req, res, next){
             next();
         }
         else {
-            res.status(404).json( {message: 'A project with that id does not exist.'} );
+            res.status(400).json( {message: 'A project with that id does not exist.'} );
         }
     })
     
