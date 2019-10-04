@@ -46,6 +46,40 @@ projectRouter.get('/actions/:id', validateProjectId, (req, res) => {
 
 });
 
+//can't user projectRouter.insert even though that's the name in the helper file. Have to use action verbs:
+//GET, POST, PUT, DELETE
+projectRouter.post('/', validateProjectInfo, (req, res) => {
+
+    const projectObject = req.body;
+    
+    projectDB.insert(projectObject)
+    .then(newProjectObject => {        
+        res.status(200).json(newProjectObject);
+    })
+    .catch(error => {
+        res.status(500).json( {error: 'There was an error adding the project to the database.'} );
+    })
+
+});
+
+
+
+projectRouter.delete('/:id', validateProjectId, (req, res) => {
+
+    const projectId = req.params.id;
+
+    projectDB.remove(projectId)
+    .then(numDeleted => {
+        res.status(200).json(numDeleted);
+
+    })
+    .catch(error => {
+        res.status(500).json( {error: 'There was an error removing the project from the database.' } );
+    })
+
+});
+
+
 //custom/local middleware
 function validateProjectId(req, res, next){
 
