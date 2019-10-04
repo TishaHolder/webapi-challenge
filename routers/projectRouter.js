@@ -62,7 +62,20 @@ projectRouter.post('/', validateProjectInfo, (req, res) => {
 
 });
 
+projectRouter.put('/:id', validateProjectId, validateProjectInfo, (req, res) => {
 
+    const projectId = req.params.id;
+    const changes = req.body;
+
+    projectDB.update(projectId, changes)
+    .then(updatedProject => {       
+        res.status(200).json(updatedProject);       
+    })
+    .catch (error => {
+        res.status(500).json( {error: 'There was an error updating the project in the database.'} );
+    })
+
+});
 
 projectRouter.delete('/:id', validateProjectId, (req, res) => {
 
