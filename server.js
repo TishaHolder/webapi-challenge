@@ -18,7 +18,7 @@ const actionRouter = require('./routers/actionRouter.js');
 
 //mount routers
 server.use('/api/projects', projectRouter);
-//server.use('/api/projects/actions', actionRouter);
+server.use('/api/projects/actions', actionRouter);
 
 //export server
 module.exports = server;
