@@ -19,6 +19,15 @@ const express = require ('express');
 //import server from server.js
 const server = require('./server.js');
 
-//set up API port
-const port = 8000;
-server.listen(port, ()=> console.log(`Server is listening on port ${port}.`));
+// node js has a process object that has a property called env that represents the environment 
+// makes the port dynamic so the API is aware of the environment and switches to a different port depending on the environment
+// add the environment variable outside of the application code
+// process.env object gives us the ability to read the port dynamically from the environment
+// dotenv is used to add the port environment variable to our computer
+const port = process.env.PORT || 8000;
+
+//heroku will choose a port if 8000 is not available. port 8000 will be used on the local machine 
+server.listen(port, () => {
+  console.log(`\n*** Server Running on http://localhost:${port} ***\n`);
+});
+
